@@ -1,0 +1,82 @@
+version: '3.8'
+
+networks:
+  olt_net:
+    driver: bridge
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: olt_db_container
+    restart: always
+    networks:
+      - olt_net
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: falcom180
+      POSTGRES_DB: olt_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  # Instance OLT C600 (Backend Port: 8001, Frontend Port: 3001)
+  backend_c600:
+    build: ./backend
+    image: hugopurohita/olt-web-backend:latest
+    container_name: olt_backend_c600
+    restart: always
+    networks:
+      - olt_net
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:falcom180@db:5432/olt_db
+      - SELECTED_OLT_ID=c600
+
+  frontend_c600:
+    image: hugopurohita/olt-web-frontend:latest
+    container_name: olt_frontend_c600
+    restart: always
+    networks:
+      - olt_net
+    ports:
+      - "3001:3000"
+    depends_on:
+      - backend_c600
+    environment:
+      - BACKEND_URL=http://backend_c600:8000
+
+  # Instance OLT C320 (Backend Port: 8002, Frontend Port: 3002)
+  backend_c320:
+    build: ./backend
+    image: hugopurohita/olt-web-backend:latest
+    container_name: olt_backend_c320
+    restart: always
+    networks:
+      - olt_net
+    ports:
+      - "8002:8000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:falcom180@db:5432/olt_db
+      - SELECTED_OLT_ID=c320
+
+  frontend_c320:
+    image: hugopurohita/olt-web-frontend:latest
+    container_name: olt_frontend_c320
+    restart: always
+    networks:
+      - olt_net
+    ports:
+      - "3002:3000"
+    depends_on:
+      - backend_c320
+    environment:
+      - BACKEND_URL=http://backend_c320:8000
+
+volumes:
+  pgdata:

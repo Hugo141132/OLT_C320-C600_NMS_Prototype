@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  backend:
+    image: hugopurohita/olt-web-backend:latest
+    container_name: olt_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      # Koneksi ke Database PostgreSQL di CasaOS
+      # Pastikan IP dan Port (5432) sesuai dengan setting CasaOS Anda!
+      - DATABASE_URL=postgresql://postgres:falcom180@192.168.1.53:5432/olt_db

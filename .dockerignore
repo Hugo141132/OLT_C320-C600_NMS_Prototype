@@ -1,0 +1,11 @@
+node_modules
+.next
+backups
+scratch
+.vscode
+__pycache__
+*.pyc
+.env
+olt.db
+olt_web.db
+tsconfig.tsbuildinfo

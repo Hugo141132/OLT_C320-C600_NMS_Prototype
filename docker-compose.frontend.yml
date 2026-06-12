@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: hugopurohita/olt-web-frontend:latest
+    container_name: olt_frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      # Koneksi ke API Backend
+      # Pastikan IP ini sesuai dengan setting CasaOS Anda
+      - BACKEND_URL=http://192.168.1.53:8000

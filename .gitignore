@@ -1,0 +1,48 @@
+# Next.js and frontend dev files
+node_modules/
+.next/
+out/
+.docusaurus/
+.cache/
+.vercel/
+.DS_Store
+*.local
+
+# Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+ENV/
+.pytest_cache/
+.mypy_cache/
+
+# Databases and configuration secrets
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+*.db
+*.sqlite
+backup_olt.sql
+backups/
+
+# v0 runtime files
+__v0_runtime_loader.js
+__v0_devtools.tsx
+__v0_jsx-dev-runtime.ts
+.snowflake/
+.v0-trash/
+next.user-config.*
+
+# IDE, compiler caches, temporary files and logs
+.vscode/
+*.tsbuildinfo
+scratch/
+backend/scratch/
+*.log
+*.zip
+*.tar.gz
